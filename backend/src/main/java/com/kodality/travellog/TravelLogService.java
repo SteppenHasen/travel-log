@@ -2,15 +2,36 @@ package com.kodality.travellog;
 
 import java.util.List;
 import javax.inject.Singleton;
+import java.util.UUID;
 
 @Singleton
 public class TravelLogService {
 
+  private TravelLogRepository travelLogRepository;
+
   public List<TravelLog> getTravelLogs() {
-    TravelLog message = new TravelLog();
-    message.setId(-1L);
-    message.setDescription("Hello! This is dummy description that is hard-coded in TravelLogService." +
-        " Instead of hard-coding you should fetch travel logs from real database using TravelLogRepository.");
-    return List.of(message);
+    return travelLogRepository.all();
   }
+
+  public TravelLog getTravelLogById(String id) {
+    return travelLogRepository.findById(id);
+  }
+
+  public void saveTravelLog(TravelLog log) {
+    log.setId(UUID.randomUUID().toString());
+    travelLogRepository.save(log);
+  }
+
+  public void updateLog(TravelLog log) {
+    for (TravelLog l : getTravelLogs()) {
+      if (log.getId() == l.getId()) {
+        travelLogRepository.update(log);
+      }
+    }
+  }
+
+  public void removeLog(String id) {
+    travelLogRepository.destroy(id);
+  }
+
 }
