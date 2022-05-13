@@ -9,30 +9,30 @@ import { ProcessHTTPMsgService } from './process-httpmsg.service';
   providedIn: 'root'
 })
 export class TravellogService {
-  server_url = 'http://localhost:8080/api/travel-logs'
+  server_url = 'http://localhost:8080/api/'
 
   searchparams: {
     owner: string;
-    regnumber: string;
-    begindate: string;
-    enddate: string
-  } = {
+    registrationnumber: string;
+    beginDate: string;
+    endDate: string
+  } = { 
     owner: '',
-    regnumber: '',
-    begindate: '',
-    enddate: ''
+    registrationnumber: '',
+    beginDate: '',
+    endDate: ''
   }
 
   constructor(private http: HttpClient,
     private processHTTPMsgService: ProcessHTTPMsgService) { }
 
   getTravelLogs(): Observable<TravelLog[]> { 
-    return this.http.get<TravelLog[]>(this.server_url+'/getTravelLogs')
+    return this.http.get<TravelLog[]>(this.server_url+'travel-logs')
       .pipe(catchError(this.processHTTPMsgService.handleError));
   }
 
   getTravelLog(id: string): Observable<TravelLog> { 
-    return this.http.get<TravelLog>(this.server_url+'/find/'+id)
+    return this.http.get<TravelLog>(this.server_url+id)
     .pipe(catchError(this.processHTTPMsgService.handleError));
   }
 
@@ -42,7 +42,7 @@ export class TravellogService {
         'Content-Type':  'application/json'
       })
     };
-    return this.http.post<TravelLog>(this.server_url+'/edit/'+travelLog.id, travelLog, httpOptions)
+    return this.http.post<TravelLog>(this.server_url+travelLog.id+':patch', travelLog, httpOptions)
       .pipe(catchError(this.processHTTPMsgService.handleError));
   }
 
@@ -52,17 +52,22 @@ export class TravellogService {
         'Content-Type':  'application/json'
       })
     };
-    return this.http.post<TravelLog>(this.server_url+'/saveTravelLog', travelLog, httpOptions)
+    return this.http.post<TravelLog>(this.server_url+'save', travelLog, httpOptions)
       .pipe(catchError(this.processHTTPMsgService.handleError));
   }
 
   deleteTravelLog(id: string) {
-    return this.http.delete(this.server_url+'/delete/'+id)
+    return this.http.delete(this.server_url+id+':destroy')
       .pipe(catchError(this.processHTTPMsgService.handleError));
   }
 
-  getLogsForReport(serchparams: object): Observable<Object> {
-    return this.http.get<Object>(this.server_url+'/TravelLogsForReport')
+  getLogsForReport(): Observable<[Object, number]> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json'
+      })
+    };
+    return this.http.post<[Object, number]>(this.server_url+'report', this.searchparams, httpOptions)
       .pipe(catchError(this.processHTTPMsgService.handleError));
   }
 }

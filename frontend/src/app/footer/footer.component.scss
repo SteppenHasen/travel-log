@@ -1,0 +1,24 @@
+$font-color: #E8D9CA;
+$background-color: #201C1B;
+
+.footer {
+    width: 100vw;
+    height: 50px;
+
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+
+    color: $font-color;
+    background-color: $background-color;
+}
+
+p {
+    margin: 0%;
+    font-size: 1em;
+}
+
+a {
+    text-decoration: none;
+    color: $font-color;
+}

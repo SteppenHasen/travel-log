@@ -7,17 +7,18 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class ProcessHTTPMsgService {
 
+  errorStatus!: number;
+  errorStatusText!: string;
+  errorStatusMessage!: string;
+
   constructor() { }
 
   public handleError(error: HttpErrorResponse | any) {
-    let errMsg: string;
 
-    if (error.error instanceof ErrorEvent) {
-      errMsg = error.error.message;
-    } else {
-      errMsg = `${error.status} - ${error.statusText || ''} ${error.error}`;
-    }
+    this.errorStatus = error.status
+    this.errorStatusText = error.errorStatusText
+    this.errorStatusMessage = error.error.errorMessage
 
-    return throwError(errMsg);
+    return throwError("Ooops we have an error!");
   }
 }

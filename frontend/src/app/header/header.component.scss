@@ -1,0 +1,26 @@
+$font-color: #E8D9CA;
+$background-color: #201C1B;
+
+.header {
+    width: 100vw;
+    height: 100px;
+
+    background-color: $background-color;
+    color: $font-color;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+h1 {font-size: 3.5em; margin: 0;}
+
+.logo {
+    width: 60px;
+    height: 60px;
+
+    background-color: $font-color;
+    -webkit-mask: url('../../assets/img/earth-europe-solid.svg') no-repeat center;
+    mask: url('../../assets/img/earth-europe-solid.svg') no-repeat center;
+}

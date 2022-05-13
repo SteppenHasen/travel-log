@@ -1,0 +1,154 @@
+<div class="main_container">
+    <div class="travel_logs">
+        <div *ngFor="let travelLog of travelLogs" class="travellog">
+            <h3>{{travelLog.route}}</h3>
+
+            <div class="description_date">
+                <p>{{travelLog.description}}</p>
+                <p>{{travelLog.date}}</p>
+            </div>
+            
+            <div class="auto_info">
+                <span>Owner: {{travelLog.owner}}</span>
+                <span>{{travelLog.registrationNumber}}</span>
+            </div>
+
+            <div class="buttons_odometer">
+                <div>
+                    <button type="button" class="edit btn" (click)="edit(travelLog.id)"></button>
+                    <button type="button" class="delete btn" (click)="delete(travelLog.id)"></button>
+                </div>
+                <span class="distance">{{travelLog.endOdometer - travelLog.startOdometer}} km</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="forms">
+        <form [formGroup]="travelLogForm" class="travellog_form">
+            <div class="form-section">
+                <label for="owner">Owner: 
+                    <input id="owner" type="text" formControlName="owner" class="inputs">
+
+                    <div *ngIf="travelLogForm.controls['owner'].invalid && (travelLogForm.controls['owner'].dirty || travelLogForm.controls['owner'].touched)" class="alert">
+                        <div *ngIf="travelLogForm.controls['owner'].errors?.required">
+                            Owner is required.
+                        </div>
+                        <div *ngIf="travelLogForm.controls['owner'].errors?.minlength">
+                            Owner must be at least 3 characters long.
+                        </div>
+                        <div *ngIf="travelLogForm.controls['owner'].errors?.pattern">
+                            Owner has wrong characters.
+                        </div>
+                    </div>
+                </label>
+
+                <label for="registrationnumber">Registration number: 
+                    <input id="registrationnumber" type="text" formControlName="registrationnumber" class="inputs">
+
+                    <div *ngIf="travelLogForm.controls['registrationnumber'].invalid && (travelLogForm.controls['registrationnumber'].dirty || travelLogForm.controls['registrationnumber'].touched)" class="alert">
+                        <div *ngIf="travelLogForm.controls['registrationnumber'].errors?.required">
+                            Registration number is required.
+                        </div>
+                    </div>
+                </label>
+            </div>
+
+            <div class="form-section">
+                <label for="route">Route: 
+                    <input id="route" type="text" formControlName="route" class="inputs">
+
+                    <div *ngIf="travelLogForm.controls['route'].invalid && (travelLogForm.controls['route'].dirty || travelLogForm.controls['route'].touched)" class="alert">
+                        <div *ngIf="travelLogForm.controls['route'].errors?.required">
+                            Route is required.
+                        </div>
+                        <div *ngIf="travelLogForm.controls['route'].errors?.minlength">
+                            Route must be at least 5 characters long.
+                        </div>
+                    </div>
+                </label>
+
+                <mat-form-field appearance="fill">
+                    <mat-label>Choose a date</mat-label>
+                    <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" formControlName="date">
+                    <mat-hint>MM/DD/YYYY 
+                        <div *ngIf="travelLogForm.controls['date'].invalid && (travelLogForm.controls['date'].dirty || travelLogForm.controls['date'].touched)" class="alert">
+                            <div *ngIf="travelLogForm.controls['date'].errors?.required">
+                                Date is required.
+                            </div>
+                        </div>
+                    </mat-hint>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+
+            <textarea id="description" formControlName="description" maxlength="200" placeholder="Write your description here."></textarea>
+            <div *ngIf="travelLogForm.controls['description'].invalid && (travelLogForm.controls['description'].dirty || travelLogForm.controls['description'].touched)" class="alert">
+                <div *ngIf="travelLogForm.controls['description'].errors?.required">
+                    Description is required.
+                </div>
+                <div *ngIf="travelLogForm.controls['description'].errors?.minlength">
+                    Description must be at least 10 characters long.
+                </div>
+            </div>
+
+            <div class="form-section">
+                <label for="startodometer">Start odometer value: 
+                    <input id="startodometer" type="number" formControlName="startodometer" class="inputs">
+                
+                    <div *ngIf="travelLogForm.controls['startodometer'].invalid && (travelLogForm.controls['startodometer'].dirty || travelLogForm.controls['startodometer'].touched)" class="alert">
+                        <div *ngIf="travelLogForm.controls['startodometer'].errors?.required">
+                            Initial odometer is required.
+                        </div>
+                    </div>
+                </label>
+
+                <label for="endodometer">Start odometer value: 
+                    <input id="endodometer" type="number" formControlName="endodometer" class="inputs">
+                    
+                    <div *ngIf="travelLogForm.controls['endodometer'].invalid && (travelLogForm.controls['endodometer'].dirty || travelLogForm.controls['endodometer'].touched)" class="alert">
+                        <div *ngIf="travelLogForm.controls['endodometer'].errors?.required">
+                            End odometer is required.
+                        </div>
+                    </div>
+                </label>
+            </div>
+
+            <button type="submit" (click)="submitTravelLogForm()" [disabled]="!travelLogForm.valid" class="btn-submit">Submit</button>
+        </form>
+
+        <form [formGroup]="searchForm" class="travellog_form">
+            <div class="form-section">
+                <label for="searchowner">Owner: 
+                    <input id="searchowner" type="text" formControlName="owner" class="inputs">
+
+                    <div *ngIf="searchForm.controls['owner'].invalid && (searchForm.controls['owner'].dirty || searchForm.controls['owner'].touched)" class="alert">
+                        <div *ngIf="searchForm.controls['owner'].errors?.minlength">
+                            Owner must be at least 3 characters long.
+                        </div>
+                        <div *ngIf="searchForm.controls['owner'].errors?.pattern">
+                            Owner has wrong characters.
+                        </div>
+                    </div>
+                </label>
+
+                <label for="searchregistrationnumber">Registration number: 
+                    <input id="searchregistrationnumber" type="text" formControlName="registrationnumber" class="inputs">
+                </label>
+            </div>
+
+            <mat-form-field appearance="fill" class="second_form_mat-form-field">
+                <mat-label>Enter a date range</mat-label>
+                <mat-date-range-input [rangePicker]="picker2">
+                  <input matStartDate placeholder="Start date" formControlName="begindate">
+                  <input matEndDate placeholder="End date" formControlName="enddate">
+                </mat-date-range-input>
+                <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker2></mat-date-range-picker>
+              </mat-form-field>
+
+              <button (click)="submitSearchForm()" [disabled]="!searchForm.valid" class="btn-submit">Submit</button>
+        </form>
+    </div>
+</div>

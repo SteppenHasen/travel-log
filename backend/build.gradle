@@ -4,6 +4,7 @@ plugins {
     id 'idea'
     id 'application'
     id 'java'
+    id 'org.liquibase.gradle' version '2.0.4'
 }
 
 version = "0.1"
@@ -28,18 +29,44 @@ dependencies {
     implementation("io.micronaut:micronaut-runtime")
     implementation("javax.annotation:javax.annotation-api")
     implementation("io.micronaut:micronaut-http-client")
+    implementation 'org.jetbrains:annotations:20.1.0'
+    implementation('junit:junit:4.13.1')
     runtimeOnly("ch.qos.logback:logback-classic")
 
     implementation("io.micronaut.data:micronaut-data-jdbc:3.3.0")
     implementation('javax.inject:javax.inject:1')
-    implementation('org.springframework:spring-jdbc:5.3.19')
+    implementation('org.springframework.boot:spring-boot-starter-jdbc:2.6.7')
+    implementation("io.micronaut.configuration:micronaut-jdbc-tomcat:1.0.0")
+    implementation("io.micronaut.serde:micronaut-serde-jackson:1.0.1")
+    implementation("io.micronaut:micronaut-spring:2.0.1")
+    implementation("com.fasterxml.jackson.core:jackson-databind")
+    implementation("com.fasterxml.jackson.core:jackson-core")
+    annotationProcessor("io.micronaut.spring:micronaut-spring-annotation:4.1.0")
+    annotationProcessor("io.micronaut.serde:micronaut-serde-processor")
+    annotationProcessor("io.micronaut:micronaut-inject-java")
 
     implementation("io.micronaut.liquibase:micronaut-liquibase")
-}
+    implementation("org.postgresql:postgresql:42.2.24")
+    liquibaseRuntime("org.postgresql:postgresql:42.2.24")
+    liquibaseRuntime('org.liquibase:liquibase-core:4.2.2')
+    liquibaseRuntime('org.liquibase:liquibase-groovy-dsl:2.1.1')
 
+    testAnnotationProcessor("io.micronaut:micronaut-inject-java")
+    testImplementation("io.micronaut.test:micronaut-test-junit5:3.1.1")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
+    testImplementation('org.mockito:mockito-core:2.1.0')
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.2")
+}
 
 application {
     mainClass.set("com.kodality.travellog.Application")
+}
+
+configurations.all {
+    resolutionStrategy.dependencySubstitution {
+        substitute(module("io.micronaut:micronaut-jackson-databind"))
+                .using(module("io.micronaut.serde:micronaut-serde-jackson:1.0.1"))
+    }
 }
 
 java {
@@ -47,6 +74,41 @@ java {
     targetCompatibility = JavaVersion.toVersion("14")
 }
 
-apply plugin: 'idea'
+liquibase {
+    activities {
+        main {
+            driver "org.postgresql.Driver"
+            changeLogFile "./src/main/resources/db/liquibase-changelog.xml"
+            url "jdbc:postgresql://localhost:5432/postgres"
+            username "postgres"
+            password "thisispassword"
+        }
+    }
+}
+
+test {
+    useJUnitPlatform {
+        includeEngines("junit-jupiter")
+    }
+}
+
+task('migrate') {
+    println "migrating BD"
+
+    liquibase {
+        activities {
+            main {
+                driver "org.postgresql.Driver"
+                changeLogFile "./src/main/resources/db/liquibase-changelog.xml"
+                url "jdbc:postgresql://localhost:5432/postgres"
+                username "postgres"
+                password "thisispassword"
+            }
+        }
+    }
+}
+
+    apply plugin: 'idea'
 apply plugin: 'java'
 apply plugin: 'application'
+apply plugin: "org.liquibase.gradle"

@@ -1,9 +1,9 @@
 --liquibase formatted sql
 
 --changeset postgres:1
-DROP TABLE IF EXISTS travellog;
+DROP TABLE IF EXISTS travellogs;
 
-CREATE TABLE travellog (
+CREATE TABLE travellogs (
     id varchar(50) primary key,
     traveldate date,
     registrationnumber varchar(20),
@@ -14,4 +14,4 @@ CREATE TABLE travellog (
     endodometer int
 );
 
---rollback drop table travellog;
+--rollback drop table travellogs;

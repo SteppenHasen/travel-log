@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ProcessHTTPMsgService } from '../services/process-httpmsg.service';
 
 @Component({
@@ -12,7 +13,10 @@ export class ErrorPageComponent implements OnInit {
   errorStatusText = this.errorService.errorStatusText
   errorStatusMessage = this.errorService.errorStatusMessage
 
-  constructor(private errorService: ProcessHTTPMsgService) { }
+  constructor(
+    private router: Router,
+    private errorService: ProcessHTTPMsgService
+    ) { }
 
   ngOnInit(): void {
   }

@@ -1,0 +1,67 @@
+$font-color: #201C1B;
+$head-background-color: #2E7758;
+$body-background-color: #CDC8C2;
+$lines-color: #E8D9CA;
+
+.main_container {
+    width: 100vw;
+    min-height: calc(100vh - 150px);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    background-image: url('../../assets/img/report.jpg');
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+table {
+    width: 80%;
+}
+
+thead {
+    background: rgba($head-background-color, $alpha: 0.5);
+}
+
+tbody {
+    background: rgba($body-background-color, $alpha: 0.5);
+}
+
+th, td {
+    color: $font-color;
+    font-size: 2em;
+    font-weight: bold;
+
+    min-width: 50px;
+    min-height: 30px;
+
+    padding: 10px;
+
+    text-align: center;
+    vertical-align: middle;
+}
+
+tr {
+    min-height: 60px;
+}
+
+.return_home {
+    width: 100px;
+    height: 40px;
+    margin-top: 20px;
+    padding-top: 15px;
+
+    background: rgba(#201C1B, $alpha: 0.5);
+    border-radius: 10px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+a {
+    font-size: 1.5em;
+    color: #E8D9CA;
+}

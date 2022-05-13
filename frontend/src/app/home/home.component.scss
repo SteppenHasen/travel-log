@@ -1,0 +1,203 @@
+$font-color: #E8D9CA;
+$background-color: #2E7758;
+$btn-color: #CDC8C2;
+
+@mixin element-bg {
+    background: rgba($background-color, $alpha: 0.2);
+    border-radius: 17px;
+}
+@mixin column {
+    display: flex;
+    flex-direction: column;
+}
+@mixin inline {
+    width: 100%;
+    display: inline-flex;
+    justify-content: space-between;
+}
+@mixin inputs {
+    background-color: rgba($font-color, $alpha: 0.3);
+    border-radius: 7px;
+    font-weight: bold;
+    border: none;
+}
+
+h3 {
+    margin: 0 0 10px 0;
+    font-size: 2.5em;
+    font-weight: bold;
+}
+.mat-hint {
+    font-size: 1em;
+    font-weight: 600;
+}
+
+.main_container {
+    width: 100vw;
+    min-height: calc(100vh - 150px);
+
+    color: $font-color;
+
+    background-image: url('../../assets/img/back.jpg');
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    display: flex;
+    flex-direction: row;
+}
+
+.travel_logs, .forms {
+    padding: 30px;
+
+    width: 50%;
+    height: auto;
+
+    @include column;
+    align-items: center;
+}
+
+.travellog {
+    width: 70%;
+    height: 150px;
+    margin-bottom: 20px;
+    padding: 20px;
+
+    @include element-bg;
+    @include column;
+
+    justify-content: space-around;
+    align-items: flex-start;
+}
+
+.description_date p {
+    font-size: 2em;
+}
+
+.auto_info {
+    font-size: 1.5em;
+}
+
+.auto_info, .buttons_odometer {
+    @include inline;
+    margin-top: 10px;
+}
+
+.btn {
+    width: 15px;
+    height: 15px;
+    background-color: $btn-color;
+    border: none;
+    margin-right: 15px;
+}
+
+.edit {
+    -webkit-mask: url('../../assets/img/pencil-solid.svg') no-repeat center;
+    mask: url('../../assets/img/pencil-solid.svg') no-repeat center;
+}
+
+.delete {
+    -webkit-mask: url('../../assets/img/trash-solid.svg') no-repeat center;
+    mask: url('../../assets/img/trash-solid.svg') no-repeat center;
+}
+
+.distance {font-size: 1.5em}
+
+.travellog_form {
+    @include element-bg;
+    @include column;
+
+    padding: 20px;
+    width: 70%;
+    margin-bottom: 30px;
+
+    justify-content: center;
+    align-items: center;
+}
+
+.form-section {
+    @include inline;
+    align-items: flex-end;
+    margin-bottom: 20px;
+}
+
+.travellog_form label {
+    display: inline-flex;
+    flex-direction: column;
+}
+
+::ng-deep .mat-form-field {
+    .mat-input-element, 
+    .mat-form-field-required-marker, 
+    .mat-form-field-label,
+    .mat-form-field-underline,
+    .mat-form-field-ripple,
+    .mat-datepicker-toggle-default-icon,
+    .mat-hint {
+        color: $font-color;
+    }
+}
+
+.inputs {
+    @include inputs;
+    height: 40px;
+    width: 100%;
+
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.btn-submit {
+    width: 40%;
+    height: 60px;
+
+    background-color: $font-color;
+    color: #201C1B;
+
+    border-radius: 17px;
+    border: none;
+
+    font-size: 2.5em;
+    font-weight: bold;
+}
+
+textarea {
+    @include inputs;
+    width: 99%;
+    height: 60px;
+    margin-bottom: 20px;
+    color: #201C1B;
+    font-size: 2em;
+}
+label {font-size: 1.5em;}
+.mat-form-field-label {font-size: 1.25em;}
+
+textarea:focus, input:focus{
+    outline: none;
+}
+
+.second_form_mat-form-field {
+    margin-bottom: 20px;
+}
+
+button:disabled, button[disabled] {
+    color: $btn-color;
+}
+
+@media  (max-width: 1155px) {
+    .form-section {
+        flex-direction: column;
+    }
+
+    label {width: 100%;}
+}
+
+@media  (max-width: 800px) {
+    .main_container {
+        flex-direction: column;
+        align-items: center;
+    } 
+    
+    .travel_logs, .forms {width: 90%;} 
+}

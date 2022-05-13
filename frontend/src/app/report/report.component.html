@@ -1,0 +1,53 @@
+<div class="main_container">
+    <table>
+        <thead>
+            <tr>
+                <th rowspan="2"></th>
+                <th rowspan="2">Date</th>
+                <th rowspan="2">Owner</th>
+                <th rowspan="2">Vehicle registration number</th>
+                <th rowspan="2">Route</th>
+                <th rowspan="2">Description</th>
+                <th colspan="2">Odometer</th>
+            </tr>
+            <tr>
+                <th>Beginning</th>
+                <th>End</th>
+            </tr>
+        </thead>
+        <tbody>
+            <ng-container *ngFor="let entry of reports">    
+                <tr>
+                    <td [attr.rowspan]="entry[1].length">{{entry[0]}}</td>
+                    <td>{{ entry[1][0].date }}</td>
+                    <td>{{ entry[1][0].owner }}</td>
+                    <td>{{ entry[1][0].registrationNumber }}</td>
+                    <td>{{ entry[1][0].route }}</td>
+                    <td>{{ entry[1][0].description }}</td>
+                    <td>{{ entry[1][0].startOdometer }}</td>
+                    <td>{{ entry[1][0].endOdometer }}</td>
+                </tr>
+                <ng-container *ngFor="let log of entry[1]; let i= index;">
+                    <tr *ngIf="i!=0">
+                        <td>{{ log.date }}</td>
+                        <td>{{ log.owner }}</td>
+                        <td>{{ log.registrationNumber }}</td>
+                        <td>{{ log.route }}</td>
+                        <td>{{ log.description }}</td>
+                        <td>{{ log.startOdometer }}</td>
+                        <td>{{ log.endOdometer }}</td>
+                    </tr>
+                </ng-container>
+            </ng-container>
+            <tr>
+                <td colspan="6"></td>
+                <td>Total:</td>
+                <td>{{ totalAmount }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="return_home">
+        <a href="/home">To homepage</a>
+    </div>
+</div>

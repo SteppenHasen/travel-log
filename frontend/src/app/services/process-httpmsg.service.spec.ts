@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { ProcessHTTPMsgService } from './process-httpmsg.service';
 
@@ -6,7 +7,9 @@ describe('ProcessHttpmsgService', () => {
   let service: ProcessHTTPMsgService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      imports: [RouterTestingModule]
+    });
     service = TestBed.inject(ProcessHTTPMsgService);
   });
 
